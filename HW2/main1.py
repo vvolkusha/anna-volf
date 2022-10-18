@@ -18,6 +18,13 @@ class Base:
     def __div__(self,num):
         return Base((self.x * num.x + self.y * num.y)/(num.x * num.x + num.y * num.y), (self.y * num.x - self.x * num.y)/(num.x * num.x + num.y * num.y))
 
+    def get_sopr(self):
+        return Complex(self.x, -1 * self.y)
+
+    def get_mod(self):
+        self.mod = np.sqrt(self.x ** 2 + self.y ** 2)
+        return self.mod
+
     def get_phi(self):
         if self.x > 0 and self.y > 0:
             self.phi = np.arctan(self.y / self.x)
@@ -31,31 +38,22 @@ class Base:
         elif self.x > 0 and self.y < 0:
             self.phi = 2 * np.pi - np.arctan(abs(self.y) / self.x)
 
-        elif self.x == 0 and self.y > 0:
+        elif (self.x == 0 and self.y > 0) or (self.x == 0 and self.y < 0):
             self.phi = np.pi / 2
 
-        elif self.x == 0 and self.y < 0:
-            self.phi = - np.pi / 2
-
-        elif self.x == 0 and self.y == 0:
-            self.phi = 0
-
-        elif self.x > 0 and self.y == 0:
+        elif (self.x == 0 and self.y == 0) or (self.x > 0 and self.y == 0):
             self.phi = 0
 
         elif self.x < 0 and self.y == 0:
             self.phi = np.pi
 
         return self.phi
-sum = Base()
-sub = Base()
-mul = Base()
-div = Base()
-self = Base(1,1)
-num = Base(1,1)
-a = Base()
-b = Base()
-print(sum(self,num))
-print(sub(self, num))
-print(mul(self, num))
-print(div(self, num))
+
+    def exp_form(self):
+        return self.get_mod(), self.get_phi()
+
+    def complex_form(self):
+        self.mod, self.phi = self.x, self.y
+        self.x = np.cos(self.phi) * self.mod
+        self.y = np.sin(self.phi) * self.mod
+        return self.x, self.y
