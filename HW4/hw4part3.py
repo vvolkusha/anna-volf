@@ -1,4 +1,4 @@
-class Complex:
+class Point:
     def __init__(self, x, y):
         self.set_x(x)
         self.set_y(y)
@@ -92,5 +92,5 @@ class Rhomb(Quadrangle):
     def area(self):
         return round(0.5 * length(self._p1, self._p3) * length(self._p2, self._p4), 2)
 
-a = Circle(Complex(0,0), Complex(0,1))
+a = Circle(Point(0,0), Point(0,1))
 print(a)
